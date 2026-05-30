@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Prince Raj</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --teal:#0f766e;--teal-light:#14b8a6;--teal-pale:#f0fdfa;--teal-mid:#ccfbf1;
+  --dark:#1c1917;--mid:#57534e;--light:#a8a29e;--border:#e7e5e4;
+  --white:#ffffff;--off:#fafaf9;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,0.96);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:64px;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:500;
+  color:var(--dark);letter-spacing:2px;
+}
+.nav-logo span{color:var(--teal);}
+.nav-links{display:flex;gap:36px;}
+.nav-links a{
+  font-size:12px;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--mid);
+  text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--teal);}
+.nav-cta{
+  padding:9px 22px;background:var(--teal);color:#fff;
+  border:none;border-radius:2px;font-size:12px;font-weight:500;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:background .2s;
+}
+.nav-cta:hover{background:#0d6961;}
+
+/* ── HERO ── */
+.hero{
+  min-height:calc(100vh - 64px);
+  display:grid;grid-template-columns:1fr 420px;
+  gap:0;align-items:stretch;
+  max-width:100%;
+}
+.hero-left{
+  padding:80px 60px;
+  display:flex;flex-direction:column;justify-content:center;
+  border-right:1px solid var(--border);
+}
+.hero-eyebrow{
+  font-size:11px;font-weight:500;letter-spacing:3px;
+  text-transform:uppercase;color:var(--teal);
+  margin-bottom:24px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--teal);}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(52px,6vw,80px);
+  font-weight:300;line-height:1;
+  color:var(--dark);letter-spacing:-1px;
+  margin-bottom:6px;
+}
+.hero-name strong{font-weight:600;color:var(--teal);}
+.hero-designation{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(18px,2.5vw,26px);
+  font-weight:300;color:var(--mid);
+  margin-bottom:32px;letter-spacing:1px;
+}
+.hero-desc{
+  font-size:15px;line-height:1.8;color:var(--mid);
+  max-width:520px;margin-bottom:40px;
+  border-left:3px solid var(--teal-light);
+  padding-left:20px;
+}
+.hero-roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;}
+.role-tag{
+  font-size:11px;font-weight:500;letter-spacing:1px;
+  text-transform:uppercase;
+  padding:6px 14px;
+  border:1px solid var(--border);
+  color:var(--mid);
+  transition:all .2s;
+}
+.role-tag:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-pale);}
+.hero-btns{display:flex;gap:14px;}
+.btn-primary{
+  padding:13px 30px;background:var(--teal);color:#fff;
+  border:none;font-size:12px;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;text-decoration:none;
+  transition:background .2s;
+}
+.btn-primary:hover{background:#0d6961;}
+.btn-outline{
+  padding:13px 30px;background:transparent;color:var(--dark);
+  border:1px solid var(--dark);font-size:12px;font-weight:500;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+  text-decoration:none;transition:all .2s;
+}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+
+/* hero right — metrics panel */
+.hero-right{
+  background:var(--off);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 48px;gap:0;
+}
+.metrics-label{
+  font-size:10px;font-weight:500;letter-spacing:3px;
+  text-transform:uppercase;color:var(--light);
+  margin-bottom:32px;
+}
+.metric-item{
+  padding:28px 0;
+  border-bottom:1px solid var(--border);
+}
+.metric-item:last-child{border-bottom:none;}
+.metric-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:52px;font-weight:600;
+  color:var(--teal);line-height:1;
+  margin-bottom:6px;
+}
+.metric-desc{font-size:13px;color:var(--mid);font-weight:400;line-height:1.5;}
+.metric-sub{font-size:11px;color:var(--light);margin-top:3px;letter-spacing:.5px;}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:100px 60px;max-width:1200px;margin:0 auto;}
+.section-full{padding:100px 0;}
+.section-inner{max-width:1200px;margin:0 auto;padding:0 60px;}
+
+.sec-label{
+  font-size:10px;font-weight:500;letter-spacing:3px;
+  text-transform:uppercase;color:var(--teal);
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--teal);}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:300;color:var(--dark);
+  margin-bottom:56px;letter-spacing:-0.5px;
+}
+.sec-title em{font-style:italic;color:var(--teal);}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.about-text p{font-size:15px;line-height:1.9;color:var(--mid);margin-bottom:20px;}
+.about-highlights{display:flex;flex-direction:column;gap:0;}
+.highlight-item{
+  padding:24px 0;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:20px;
+}
+.highlight-item:first-child{border-top:1px solid var(--border);}
+.highlight-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:600;color:var(--teal);
+  min-width:80px;line-height:1;
+}
+.highlight-text strong{font-size:14px;font-weight:500;color:var(--dark);display:block;margin-bottom:4px;}
+.highlight-text span{font-size:13px;color:var(--light);}
+
+/* ── EXPERIENCE ── */
+.exp-bg{background:var(--off);}
+.exp-grid{display:grid;grid-template-columns:200px 1fr;gap:60px;}
+.exp-nav{display:flex;flex-direction:column;gap:0;position:sticky;top:100px;align-self:start;}
+.exp-nav-item{
+  padding:16px 20px;
+  border-left:2px solid var(--border);
+  cursor:pointer;transition:all .2s;
+}
+.exp-nav-item.active{border-left-color:var(--teal);background:var(--white);}
+.exp-nav-item:hover{border-left-color:var(--teal-light);}
+.exp-nav-company{font-size:13px;font-weight:500;color:var(--dark);}
+.exp-nav-year{font-size:11px;color:var(--light);margin-top:2px;}
+.exp-cards{display:flex;flex-direction:column;gap:32px;}
+.exp-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-top:3px solid var(--teal);
+  padding:36px;
+  opacity:0;transform:translateY(20px);
+  transition:all .6s;
+}
+.exp-card.visible{opacity:1;transform:translateY(0);}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:8px;}
+.exp-company{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:500;color:var(--dark);
+}
+.exp-date{
+  font-size:11px;font-weight:500;letter-spacing:1px;
+  color:var(--white);background:var(--teal);
+  padding:4px 12px;
+}
+.exp-role{font-size:13px;font-weight:500;color:var(--teal);letter-spacing:.5px;margin-bottom:20px;}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.exp-bullets li{
+  font-size:13.5px;color:var(--mid);line-height:1.7;
+  padding-left:20px;position:relative;
+}
+.exp-bullets li::before{
+  content:'';position:absolute;left:0;top:10px;
+  width:6px;height:1px;background:var(--teal);
+}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;}
+.exp-tag{
+  font-size:11px;padding:3px 10px;
+  background:var(--teal-pale);color:var(--teal);
+  font-weight:500;letter-spacing:.5px;
+}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);}
+.skill-block{
+  background:var(--white);padding:32px;
+  transition:background .2s;
+}
+.skill-block:hover{background:var(--teal-pale);}
+.skill-block-label{
+  font-size:10px;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;color:var(--teal);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.skill-list{display:flex;flex-direction:column;gap:8px;}
+.skill-row{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:13px;color:var(--mid);
+}
+.skill-bar{width:80px;height:2px;background:var(--border);flex-shrink:0;}
+.skill-bar-fill{height:100%;background:var(--teal);transition:width 1s ease;}
+
+/* ── PROJECTS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:32px;}
+.project-card{
+  border:1px solid var(--border);
+  transition:all .3s;
+  opacity:0;transform:translateY(20px);
+  transition:all .6s;
+}
+.project-card.visible{opacity:1;transform:translateY(0);}
+.project-card:hover{border-color:var(--teal);}
+.project-top{
+  padding:28px;
+  border-bottom:1px solid var(--border);
+  background:var(--off);
+}
+.project-number{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:300;color:var(--border);
+  line-height:1;margin-bottom:16px;
+}
+.project-title{font-size:17px;font-weight:500;color:var(--dark);margin-bottom:6px;}
+.project-org{font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.5px;}
+.project-bottom{padding:24px 28px;}
+.project-desc{font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:16px;}
+.project-impact{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:500;color:var(--teal);
+  margin-bottom:16px;
+}
+.project-stack{display:flex;flex-wrap:wrap;gap:6px;}
+.project-stack span{
+  font-size:11px;padding:2px 8px;
+  border:1px solid var(--border);color:var(--light);
+}
+
+/* ── AWARDS ── */
+.awards-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;background:var(--dark);
+}
+.award-block{
+  padding:48px 36px;
+  border-right:1px solid rgba(255,255,255,0.08);
+  transition:background .3s;
+}
+.award-block:last-child{border-right:none;}
+.award-block:hover{background:rgba(15,118,110,0.2);}
+.award-year{font-size:11px;color:var(--teal-light);letter-spacing:2px;margin-bottom:16px;}
+.award-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;color:#fff;
+  margin-bottom:8px;line-height:1.3;
+}
+.award-org{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:12px;}
+.award-desc{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6;}
+
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+.edu-card{
+  padding:36px;border:1px solid var(--border);
+  position:relative;overflow:hidden;transition:border-color .3s;
+}
+.edu-card:hover{border-color:var(--teal);}
+.edu-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:3px;background:var(--teal);
+}
+.edu-degree{font-size:17px;font-weight:500;color:var(--dark);margin-bottom:8px;}
+.edu-school{font-size:13px;color:var(--teal);font-weight:500;margin-bottom:16px;}
+.edu-meta{display:flex;gap:20px;}
+.edu-meta-item{font-size:12px;color:var(--light);}
+.edu-meta-item strong{display:block;font-size:18px;font-weight:500;color:var(--dark);font-family:'Cormorant Garamond',serif;}
+
+/* ── CONTACT ── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.contact-text p{font-size:15px;line-height:1.8;color:var(--mid);margin-bottom:16px;}
+.contact-items{display:flex;flex-direction:column;gap:0;}
+.contact-row{
+  display:flex;align-items:center;gap:20px;
+  padding:20px 0;border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;transition:all .2s;
+}
+.contact-row:first-child{border-top:1px solid var(--border);}
+.contact-row:hover .contact-row-label{color:var(--teal);}
+.contact-row-icon{
+  width:40px;height:40px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;color:var(--teal);font-size:18px;
+  transition:all .2s;
+}
+.contact-row:hover .contact-row-icon{background:var(--teal);color:#fff;border-color:var(--teal);}
+.contact-row-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--light);margin-bottom:3px;}
+.contact-row-value{font-size:14px;font-weight:400;color:var(--dark);}
+.status-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 20px;border:1px solid var(--teal);
+  background:var(--teal-pale);margin-bottom:28px;
+}
+.status-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;}
+.status-text{font-size:12px;font-weight:500;letter-spacing:1px;color:var(--teal);text-transform:uppercase;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);color:rgba(255,255,255,0.35);
+  text-align:center;padding:36px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;letter-spacing:.5px;
+}
+footer .footer-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;color:rgba(255,255,255,0.6);letter-spacing:2px;
+}
+footer span{color:var(--teal-light);}
+
+/* ── DIVIDER ── */
+.divider{width:100%;height:1px;background:var(--border);}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:all .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .nav-links,.nav-cta{display:none;}
+  .hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .hero-left{padding:60px 20px;}
+  .section{padding:60px 20px;}
+  .section-inner{padding:0 20px;}
+  .about-grid,.exp-grid,.contact-layout,.edu-grid{grid-template-columns:1fr;gap:40px;}
+  .awards-strip{grid-template-columns:1fr 1fr;}
+  .exp-nav{display:none;}
+}
+</style>
+
+<nav>
+  <div class="nav-logo">Prince <span>Raj</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#awards">Awards</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for new opportunities</div>
+    <h1 class="hero-name">Prince<br><strong>Raj</strong></h1>
+    <div class="hero-designation">SaaS Technical Professional</div>
+    <p class="hero-desc">3+ years turning complex enterprise challenges into measurable outcomes — across Customer Success, Technical Support, Solutions Consulting, and Business Analysis.</p>
+    <div class="hero-roles">
+      <span class="role-tag">Customer Success Engineer</span>
+      <span class="role-tag">Solutions Consultant</span>
+      <span class="role-tag">Technical Support Engineer</span>
+      <span class="role-tag">Technical Business Analyst</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get In Touch</a>
+      <a href="#experience" class="btn-outline">View Work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="metrics-label">Key Metrics</div>
+    <div class="metric-item">
+      <div class="metric-num">20+</div>
+      <div class="metric-desc">Enterprise accounts managed simultaneously</div>
+      <div class="metric-sub">Gainsight · 2025</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">95%+</div>
+      <div class="metric-desc">SLA compliance and CSAT score maintained</div>
+      <div class="metric-sub">GlobalLogic · Adobe Campaign</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">600%</div>
+      <div class="metric-desc">Team processing time saved via tool built</div>
+      <div class="metric-sub">Instance Review App · Gainsight</div>
+    </div>
+    <div class="metric-item">
+      <div class="metric-num">4</div>
+      <div class="metric-desc">Industry awards across three companies</div>
+      <div class="metric-sub">Gainsight · GlobalLogic · Epsilon</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="reveal">
+    <div class="sec-label">About</div>
+    <div class="sec-title">Bridging technology<br>and <em>customer outcomes</em></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a versatile SaaS professional who thrives at the intersection of technology and customer success. With 3+ years across enterprise platforms like Gainsight and Adobe Campaign, I have learned that the best solutions come from deeply understanding both the technical landscape and the human behind the problem.</p>
+        <p>From managing 20+ enterprise accounts and maintaining 95%+ CSAT scores to building internal tools that saved my team 600%+ in processing time — I bring both the analytical mind of a business analyst and the hands-on skills of a technical engineer.</p>
+        <p>Based in Hyderabad, open to remote and hybrid roles across India and globally.</p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <div class="highlight-num">3+</div>
+          <div class="highlight-text">
+            <strong>Years of Enterprise Experience</strong>
+            <span>Gainsight · GlobalLogic · Epsilon India</span>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">4</div>
+          <div class="highlight-text">
+            <strong>Target Roles</strong>
+            <span>CS Engineer · Solutions Consultant · TSE · BA</span>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">30%</div>
+          <div class="highlight-text">
+            <strong>Error Reduction at GlobalLogic</strong>
+            <span>Through HTML/CSS/JS/SQL debugging</span>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">MCA</div>
+          <div class="highlight-text">
+            <strong>Master of Computer Applications</strong>
+            <span>Jain University · GPA 7.87</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<div id="experience" class="section-full exp-bg">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="sec-label">Experience</div>
+      <div class="sec-title">Professional <em>history</em></div>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-nav">
+        <div class="exp-nav-item active">
+          <div class="exp-nav-company">Gainsight</div>
+          <div class="exp-nav-year">2025 – Present</div>
+        </div>
+        <div class="exp-nav-item">
+          <div class="exp-nav-company">GlobalLogic</div>
+          <div class="exp-nav-year">2024 – 2025</div>
+        </div>
+        <div class="exp-nav-item">
+          <div class="exp-nav-company">Epsilon India</div>
+          <div class="exp-nav-year">2023 – 2024</div>
+        </div>
+      </div>
+      <div class="exp-cards">
+        <div class="exp-card reveal">
+          <div class="exp-header">
+            <div class="exp-company">Gainsight</div>
+            <div class="exp-date">April 2025 – Present</div>
+          </div>
+          <div class="exp-role">Customer Success Solutions Consultant</div>
+          <ul class="exp-bullets">
+            <li>Own a portfolio of 20+ enterprise accounts — conducting bi-weekly strategic calls to align product usage with business goals, resolve technical blockers, and ensure measurable customer ROI.</li>
+            <li>Deliver technical enablement and training sessions on HTML, CSS, JavaScript, REST API, and SQL integrations — improving product adoption rates and reducing escalations.</li>
+            <li>Gather, analyse, and document customer requirements; translate findings into actionable product feedback to influence roadmap priorities with Product, Engineering, and Sales.</li>
+            <li>Developed internal data-retrieval tool using Gainsight's internal APIs — adopted as standard workflow tool across the CS team.</li>
+            <li>Co-built Instance Review Application via end-to-end process mapping, saving the team 600%+ in processing time per review cycle.</li>
+            <li>Onboard and mentor new CS team members. Won Rookie of the Quarter (2025).</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Gainsight</span><span class="exp-tag">REST API</span><span class="exp-tag">JavaScript</span><span class="exp-tag">SQL</span><span class="exp-tag">HTML/CSS</span><span class="exp-tag">Customer Success</span>
+          </div>
+        </div>
+        <div class="exp-card reveal">
+          <div class="exp-header">
+            <div class="exp-company">GlobalLogic</div>
+            <div class="exp-date">May 2024 – April 2025</div>
+          </div>
+          <div class="exp-role">Senior Product Support Engineer</div>
+          <ul class="exp-bullets">
+            <li>Delivered Tier-2 technical support for Adobe Campaign Classic/Standard (PaaS) — primary point of contact for enterprise clients across the Americas.</li>
+            <li>Debugged HTML/CSS email templates, JavaScript personalisation logic, and SQL audience segmentation queries — reducing client errors by 30%.</li>
+            <li>Leveraged Splunk for log-based root cause analysis, reducing MTTR by 15% and proactively preventing recurring incidents.</li>
+            <li>Technical liaison between enterprise clients and Engineering — translated business requirements into precise technical specifications.</li>
+            <li>Maintained 95%+ SLA compliance and 95%+ CSAT. Top Performer and Dashing Debut Award winner.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Adobe Campaign</span><span class="exp-tag">Splunk</span><span class="exp-tag">SQL</span><span class="exp-tag">JavaScript</span><span class="exp-tag">Jira</span><span class="exp-tag">SFTP</span>
+          </div>
+        </div>
+        <div class="exp-card reveal">
+          <div class="exp-header">
+            <div class="exp-company">Epsilon India</div>
+            <div class="exp-date">Feb 2023 – April 2024</div>
+          </div>
+          <div class="exp-role">Campaign Analyst</div>
+          <ul class="exp-bullets">
+            <li>Supported 5 concurrent enterprise accounts on Harmony (PCM) — email campaigns, audience segmentation, A/B testing, and technical troubleshooting.</li>
+            <li>Used HTML, CSS, Free Marker scripting, and SQL for template debugging and audience query optimisation — improving data accuracy by 30%.</li>
+            <li>Identified recurring manual workflow bottleneck; independently built Automate Hub — reduced ServiceNow ticket resolution by 10–15% and manual effort by 15–20%.</li>
+            <li>Produced campaign performance reports and process documentation for enterprise clients. Best Newcomer Award winner.</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Harmony PCM</span><span class="exp-tag">HTML/CSS</span><span class="exp-tag">SQL</span><span class="exp-tag">ServiceNow</span><span class="exp-tag">Free Marker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="reveal">
+    <div class="sec-label">Skills</div>
+    <div class="sec-title">Technical <em>expertise</em></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-block">
+      <div class="skill-block-label">Customer Success</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>Account Management</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+        <div class="skill-row"><span>QBR / EBR</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Churn Mitigation</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span>Onboarding</span><div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div></div>
+        <div class="skill-row"><span>Enablement</span><div class="skill-bar"><div class="skill-bar-fill" style="width:94%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-label">Technical Support</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>Tier-2 Support</span><div class="skill-bar"><div class="skill-bar-fill" style="width:96%"></div></div></div>
+        <div class="skill-row"><span>Root Cause Analysis</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Splunk</span><div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+        <div class="skill-row"><span>SLA / CSAT</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+        <div class="skill-row"><span>Incident Management</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-label">Business Analysis</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>Requirements Gathering</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span>Process Mapping</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><span>Gap Analysis</span><div class="skill-bar"><div class="skill-bar-fill" style="width:83%"></div></div></div>
+        <div class="skill-row"><span>Documentation</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>Stakeholder Mgmt</span><div class="skill-bar"><div class="skill-bar-fill" style="width:87%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-label">Development & APIs</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>JavaScript</span><div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+        <div class="skill-row"><span>HTML / CSS</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>SQL</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><span>REST API</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span>Python</span><div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-label">Platforms</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>Gainsight</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+        <div class="skill-row"><span>Adobe Campaign</span><div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div></div>
+        <div class="skill-row"><span>Jira / ServiceNow</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span>Harmony PCM</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span>MS Dynamics</span><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-label">Soft Skills</div>
+      <div class="skill-list">
+        <div class="skill-row"><span>Client Engagement</span><div class="skill-bar"><div class="skill-bar-fill" style="width:96%"></div></div></div>
+        <div class="skill-row"><span>Team Mentoring</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span>Cross-functional Collab</span><div class="skill-bar"><div class="skill-bar-fill" style="width:92%"></div></div></div>
+        <div class="skill-row"><span>Problem Solving</span><div class="skill-bar"><div class="skill-bar-fill" style="width:94%"></div></div></div>
+        <div class="skill-row"><span>Communication</span><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="reveal">
+    <div class="sec-label">Projects</div>
+    <div class="sec-title">Selected <em>work</em></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-top">
+        <div class="project-number">01</div>
+        <div class="project-title">Instance Review Application</div>
+        <div class="project-org">Gainsight · Internal Tool · 2025</div>
+      </div>
+      <div class="project-bottom">
+        <div class="project-desc">Mapped team workflows, identified review cycle bottleneck, and co-built an end-to-end automation solution using internal Gainsight APIs. Now used as standard workflow across the CS team.</div>
+        <div class="project-impact">600%+ time saved per cycle</div>
+        <div class="project-stack">
+          <span>Gainsight APIs</span><span>JavaScript</span><span>REST API</span><span>Process Mapping</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-top">
+        <div class="project-number">02</div>
+        <div class="project-title">Automate Hub</div>
+        <div class="project-org">Epsilon India · automatehub.netlify.app</div>
+      </div>
+      <div class="project-bottom">
+        <div class="project-desc">Solo-built web application automating data sorting and email subject line personalisation. Identified the bottleneck independently and delivered a full solution adopted by the support team.</div>
+        <div class="project-impact">10–15% faster resolution</div>
+        <div class="project-stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>ServiceNow API</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-top">
+        <div class="project-number">03</div>
+        <div class="project-title">Online Examination System</div>
+        <div class="project-org">Jain University · 2022–23</div>
+      </div>
+      <div class="project-bottom">
+        <div class="project-desc">Gathered institutional requirements, designed system architecture, and deployed a full-stack MCQ exam platform with anti-cheating logic — adopted institution-wide for official examinations.</div>
+        <div class="project-impact">30–40% admin time saved</div>
+        <div class="project-stack">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>MySQL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<div id="awards">
+  <div class="reveal">
+    <div style="padding:60px 60px 0;max-width:1200px;margin:0 auto;">
+      <div class="sec-label">Recognition</div>
+      <div class="sec-title" style="margin-bottom:40px;">Awards & <em>achievements</em></div>
+    </div>
+  </div>
+  <div class="awards-strip reveal">
+    <div class="award-block">
+      <div class="award-year">2025</div>
+      <div class="award-title">Rookie of the Quarter</div>
+      <div class="award-org">Gainsight</div>
+      <div class="award-desc">Exceptional cross-functional impact and account performance within the first quarter of joining.</div>
+    </div>
+    <div class="award-block">
+      <div class="award-year">2024</div>
+      <div class="award-title">Top Performer Award</div>
+      <div class="award-org">GlobalLogic</div>
+      <div class="award-desc">Ranked best performer on the Adobe Campaign enterprise support team for outstanding technical delivery.</div>
+    </div>
+    <div class="award-block">
+      <div class="award-year">2024</div>
+      <div class="award-title">Dashing Debut Award</div>
+      <div class="award-org">GlobalLogic</div>
+      <div class="award-desc">Outstanding onboarding performance and immediate client impact as a new team member.</div>
+    </div>
+    <div class="award-block">
+      <div class="award-year">2023</div>
+      <div class="award-title">Best Newcomer Award</div>
+      <div class="award-org">Epsilon India</div>
+      <div class="award-desc">Rapidly mastered 5 concurrent client accounts and significantly elevated team efficiency.</div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<section id="education" class="section">
+  <div class="reveal">
+    <div class="sec-label">Education</div>
+    <div class="sec-title">Academic <em>background</em></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">Master of Computer Applications</div>
+        <div class="edu-school">Jain University, Bengaluru</div>
+        <div class="edu-meta">
+          <div class="edu-meta-item"><strong>7.87</strong>GPA</div>
+          <div class="edu-meta-item"><strong>2021–23</strong>Duration</div>
+          <div class="edu-meta-item"><strong>MCA</strong>Degree</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Computer Applications</div>
+        <div class="edu-school">St. Xavier's College, Ranchi</div>
+        <div class="edu-meta">
+          <div class="edu-meta-item"><strong>7.22</strong>GPA</div>
+          <div class="edu-meta-item"><strong>2017–20</strong>Duration</div>
+          <div class="edu-meta-item"><strong>BCA</strong>Degree</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="reveal">
+    <div class="sec-label">Contact</div>
+    <div class="sec-title">Let's <em>connect</em></div>
+    <div class="contact-layout">
+      <div class="contact-text">
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          <div class="status-text">Open to opportunities</div>
+        </div>
+        <p>I am actively exploring roles in Customer Success Engineering, Solutions Consulting, Technical Support, and Business Analysis. Whether you have a position, a project, or just want to connect — I would love to hear from you.</p>
+        <p>Based in Hyderabad, India. Open to remote, hybrid, and relocation opportunities across India.</p>
+      </div>
+      <div class="contact-items">
+        <a class="contact-row" href="mailto:prince1022raj@gmail.com">
+          <div class="contact-row-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+          <div><div class="contact-row-label">Email</div><div class="contact-row-value">prince1022raj@gmail.com</div></div>
+        </a>
+        <a class="contact-row" href="tel:+918298147719">
+          <div class="contact-row-icon"><i class="ti ti-phone" aria-hidden="true"></i></div>
+          <div><div class="contact-row-label">Phone</div><div class="contact-row-value">+91 82981 47719</div></div>
+        </a>
+        <a class="contact-row" href="https://linkedin.com/in/prince-raj-22x" target="_blank">
+          <div class="contact-row-icon"><i class="ti ti-brand-linkedin" aria-hidden="true"></i></div>
+          <div><div class="contact-row-label">LinkedIn</div><div class="contact-row-value">linkedin.com/in/prince-raj-22x</div></div>
+        </a>
+        <a class="contact-row" href="https://automatehub.netlify.app" target="_blank">
+          <div class="contact-row-icon"><i class="ti ti-world" aria-hidden="true"></i></div>
+          <div><div class="contact-row-label">Project</div><div class="contact-row-value">automatehub.netlify.app</div></div>
+        </a>
+        <div class="contact-row">
+          <div class="contact-row-icon"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
+          <div><div class="contact-row-label">Location</div><div class="contact-row-value">Hyderabad, India</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Prince <span>Raj</span></div>
+  <div>Hyderabad, India &nbsp;·&nbsp; Open to remote & hybrid</div>
+  <div>CS Engineer &nbsp;<span>·</span>&nbsp; Support &nbsp;<span>·</span>&nbsp; BA</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'), e.target.dataset.delay||0);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal,.exp-card,.project-card').forEach((el,i)=>{
+  el.dataset.delay = (i%3)*120;
+  observer.observe(el);
+});
+
+const bars = document.querySelectorAll('.skill-bar-fill');
+const barObserver = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const w = e.target.style.width;
+      e.target.style.width='0';
+      setTimeout(()=>e.target.style.width=w,100);
+    }
+  });
+},{threshold:0.5});
+bars.forEach(b=>{
+  const w=b.style.width;b.style.width='0';
+  barObserver.observe(b);
+});
+
+const navItems = document.querySelectorAll('.exp-nav-item');
+navItems.forEach((item,i)=>{
+  item.addEventListener('click',()=>{
+    navItems.forEach(n=>n.classList.remove('active'));
+    item.classList.add('active');
+    const cards = document.querySelectorAll('.exp-card');
+    if(cards[i]) cards[i].scrollIntoView({behavior:'smooth',block:'center'});
+  });
+});
+
+window.addEventListener('scroll',()=>{
+  const sections=['about','experience','skills','projects','awards','contact'];
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    const rect=el.getBoundingClientRect();
+    if(rect.top<=100&&rect.bottom>=100){
+      document.querySelectorAll('.nav-links a').forEach(a=>{
+        a.style.color = a.getAttribute('href')==='#'+id?'var(--teal)':'';
+      });
+    }
+  });
+});
+</script>
