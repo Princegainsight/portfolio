@@ -2,542 +2,407 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Prince Raj — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --red:#CC0000;--dark-red:#8B0000;--red-glow:rgba(204,0,0,0.4);
+  --blue:#003366;--blue-l:#1a4d99;
+  --web:#c8a96e;--web-pale:rgba(200,169,110,0.15);
+  --bg:#07070f;--bg2:#0d0d1f;--bg3:#111127;
+  --white:#f5f0e8;--muted:rgba(245,240,232,0.55);--faint:rgba(245,240,232,0.25);
+  --border:rgba(245,240,232,0.08);--border-r:rgba(204,0,0,0.25);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;line-height:1.6;}
+a{text-decoration:none;color:inherit;}
 
-  *{margin:0;padding:0;box-sizing:border-box;}
+/* ── WEB CANVAS ── */
+#wc{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.18;}
 
-  :root{
-    --red:#CC0000;
-    --dark-red:#8B0000;
-    --blue:#003366;
-    --dark-blue:#001a33;
-    --web:#c8a96e;
-    --white:#f5f0e8;
-    --gold:#FFD700;
-    --text:#1a1a2e;
-  }
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:64px;
+  background:rgba(7,7,15,0.92);
+  border-bottom:1px solid var(--border-r);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,5vw,48px);
+}
+.nav-logo{
+  font-family:'Bangers',cursive;
+  font-size:24px;letter-spacing:3px;
+  color:var(--red);
+  text-shadow:0 0 16px var(--red-glow);
+  flex-shrink:0;
+}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{
+  font-size:12px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);
+  transition:color .2s;white-space:nowrap;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--red);}
+.nav-cta{
+  flex-shrink:0;
+  padding:8px 20px;background:var(--red);color:#fff;
+  border:none;font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;
+  transition:background .2s;white-space:nowrap;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.nav-cta:hover{background:var(--dark-red);}
+/* hamburger */
+.nav-toggle{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;z-index:1001;
+}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--white);border-radius:1px;transition:all .3s;}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+/* drawer */
+.nav-drawer{
+  display:none;position:fixed;
+  top:64px;left:0;right:0;bottom:0;
+  background:rgba(7,7,15,0.98);
+  z-index:999;flex-direction:column;
+  padding:40px clamp(16px,5vw,48px);
+  gap:0;border-top:1px solid var(--border-r);
+  overflow-y:auto;
+}
+.nav-drawer.open{display:flex;}
+.nav-drawer a{
+  font-family:'Bangers',cursive;
+  font-size:32px;letter-spacing:3px;
+  color:var(--white);padding:16px 0;
+  border-bottom:1px solid var(--border);
+  transition:color .2s;
+}
+.nav-drawer a:hover{color:var(--red);}
+.nav-drawer .d-cta{
+  margin-top:32px;padding:16px 32px;
+  background:var(--red);color:#fff;
+  font-size:14px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;text-align:center;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
 
-  html{scroll-behavior:smooth;}
+@media(max-width:860px){
+  .nav-links,.nav-cta{display:none;}
+  .nav-toggle{display:flex;}
+}
 
-  body{
-    font-family:'Inter',sans-serif;
-    background:#0a0a1a;
-    color:var(--white);
-    overflow-x:hidden;
-  }
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100svh;padding-top:64px;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding-left:clamp(16px,5vw,60px);padding-right:clamp(16px,5vw,60px);
+  padding-bottom:clamp(40px,6vw,60px);
+}
+.hero-inner{max-width:720px;}
+.web-string{width:2px;height:clamp(40px,6vh,70px);background:linear-gradient(to bottom,transparent,rgba(200,169,110,.5));margin:0 auto 0;}
+.hero-spider{
+  font-size:clamp(48px,8vw,72px);
+  display:block;margin:0 auto 16px;
+  animation:hang 3s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px var(--red-glow));
+}
+@keyframes hang{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-10px) rotate(4deg);}}
+.hero-badge{
+  display:inline-block;background:var(--red);color:#fff;
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;padding:5px 16px;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  margin-bottom:18px;
+}
+.hero-name{
+  font-family:'Bangers',cursive;
+  font-size:clamp(60px,14vw,120px);
+  letter-spacing:4px;line-height:.95;
+  text-shadow:3px 3px 0 var(--red),6px 6px 0 var(--dark-red);
+  margin-bottom:8px;
+}
+.hero-title{
+  font-family:'Bangers',cursive;
+  font-size:clamp(18px,4vw,30px);
+  letter-spacing:3px;color:var(--red);
+  margin-bottom:18px;
+  text-shadow:0 0 20px var(--red-glow);
+}
+.hero-desc{font-size:15px;color:var(--muted);max-width:540px;margin:0 auto 28px;line-height:1.7;}
+.role-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:32px;}
+.rpill{
+  font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  padding:6px 14px;border:1px solid var(--border-r);color:var(--muted);
+  background:rgba(204,0,0,.06);transition:all .2s;
+}
+.rpill:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-p{
+  padding:13px 28px;background:var(--red);color:#fff;border:none;
+  font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+  transition:background .2s;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.btn-p:hover{background:var(--dark-red);}
+.btn-s{
+  padding:13px 28px;background:transparent;color:var(--white);
+  border:1px solid rgba(245,240,232,.3);font-size:11px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;
+}
+.btn-s:hover{border-color:var(--red);color:var(--red);}
 
-  /* ── WEB CANVAS ── */
-  #web-canvas{
-    position:fixed;top:0;left:0;
-    width:100%;height:100%;
-    pointer-events:none;z-index:0;
-    opacity:0.18;
-  }
+/* ── SECTION ── */
+.section{
+  position:relative;z-index:1;
+  padding:clamp(60px,8vw,100px) clamp(16px,5vw,60px);
+  max-width:1200px;margin:0 auto;
+}
+.sec-label{
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--red);
+  display:flex;align-items:center;gap:12px;margin-bottom:10px;
+}
+.sec-label::before{content:'';width:24px;height:1px;background:var(--red);}
+.sec-title{
+  font-family:'Bangers',cursive;
+  font-size:clamp(32px,5vw,48px);
+  letter-spacing:3px;color:var(--white);
+  margin-bottom:clamp(32px,5vw,52px);
+}
+.divider-line{height:1px;background:var(--border);position:relative;z-index:1;}
 
-  /* ── SPIDER CURSOR ── */
-  #spider-cursor{
-    position:fixed;
-    width:32px;height:32px;
-    pointer-events:none;
-    z-index:9999;
-    transform:translate(-50%,-50%);
-    transition:opacity .3s;
-    font-size:28px;
-    filter:drop-shadow(0 0 6px rgba(220,20,20,0.8));
-  }
+/* ── STATS STRIP ── */
+.stats-strip{
+  position:relative;z-index:1;
+  background:var(--red);
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.stat-item{
+  padding:clamp(20px,3vw,32px) 20px;
+  text-align:center;
+  border-right:1px solid rgba(255,255,255,.15);
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-family:'Bangers',cursive;
+  font-size:clamp(36px,5vw,52px);
+  letter-spacing:2px;color:#fff;line-height:1;
+}
+.stat-lbl{font-size:11px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,.7);margin-top:4px;}
+@media(max-width:600px){
+  .stats-strip{grid-template-columns:1fr 1fr;}
+  .stat-item:nth-child(2){border-right:none;}
+  .stat-item:nth-child(3){border-top:1px solid rgba(255,255,255,.15);}
+  .stat-item:nth-child(4){border-right:none;border-top:1px solid rgba(255,255,255,.15);}
+}
 
-  /* ── NAV ── */
-  nav{
-    position:fixed;top:0;left:0;right:0;
-    z-index:100;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 40px;
-    background:rgba(0,0,17,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:2px solid var(--red);
-  }
-  .nav-logo{
-    font-family:'Bangers',cursive;
-    font-size:26px;
-    letter-spacing:2px;
-    color:var(--red);
-    text-shadow:0 0 20px rgba(220,0,0,0.5);
-  }
-  .nav-links{display:flex;gap:28px;}
-  .nav-links a{
-    color:var(--white);
-    text-decoration:none;
-    font-size:13px;
-    font-weight:500;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    transition:color .2s;
-    position:relative;
-  }
-  .nav-links a::after{
-    content:'';position:absolute;bottom:-4px;left:0;right:0;
-    height:2px;background:var(--red);
-    transform:scaleX(0);transition:transform .2s;
-  }
-  .nav-links a:hover{color:var(--red);}
-  .nav-links a:hover::after{transform:scaleX(1);}
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,60px);align-items:start;}
+.about-p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.about-highlights{display:flex;flex-direction:column;gap:0;}
+.ahl{
+  padding:20px 0;border-bottom:1px solid var(--border);
+  display:flex;gap:16px;align-items:flex-start;
+}
+.ahl:first-child{border-top:1px solid var(--border);}
+.ahl-num{
+  font-family:'Bangers',cursive;font-size:32px;
+  color:var(--red);min-width:64px;line-height:1;flex-shrink:0;
+}
+.ahl-text strong{font-size:13.5px;font-weight:600;color:var(--white);display:block;margin-bottom:3px;}
+.ahl-text span{font-size:12px;color:var(--muted);}
+@media(max-width:720px){.about-grid{grid-template-columns:1fr;}}
 
-  /* ── SECTIONS ── */
-  section{
-    position:relative;z-index:1;
-    padding:80px 40px;
-    max-width:1100px;
-    margin:0 auto;
-  }
+/* ── EXPERIENCE ── */
+.exp-wrap{position:relative;z-index:1;background:var(--bg2);}
+.exp-inner{max-width:1200px;margin:0 auto;padding:clamp(60px,8vw,100px) clamp(16px,5vw,60px);}
+.exp-grid{display:grid;grid-template-columns:160px 1fr;gap:clamp(24px,4vw,52px);}
+.exp-nav{display:flex;flex-direction:column;position:sticky;top:80px;align-self:start;}
+.exp-nb{
+  padding:12px 16px;border-left:2px solid var(--border);
+  background:none;border-right:none;border-top:none;border-bottom:none;
+  cursor:pointer;text-align:left;transition:all .2s;
+}
+.exp-nb.active{border-left-color:var(--red);background:rgba(204,0,0,.05);}
+.exp-nb:hover{border-left-color:rgba(204,0,0,.5);}
+.exp-nb-co{font-size:13px;font-weight:600;color:var(--white);}
+.exp-nb-yr{font-size:11px;color:var(--muted);margin-top:2px;}
+.exp-cards{display:flex;flex-direction:column;gap:20px;}
+.exp-card{
+  border:1px solid var(--border);
+  border-left:3px solid var(--red);
+  background:rgba(255,255,255,.02);
+  padding:clamp(18px,3vw,30px);
+  transition:background .3s;
+}
+.exp-card:hover{background:rgba(204,0,0,.04);}
+.exp-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+.exp-co{font-family:'Bangers',cursive;font-size:26px;color:var(--red);letter-spacing:1px;}
+.exp-badge{
+  font-size:10px;font-weight:600;letter-spacing:1px;
+  background:rgba(204,0,0,.15);color:var(--red);
+  border:1px solid var(--border-r);padding:3px 10px;white-space:nowrap;
+}
+.exp-role{font-size:12px;font-weight:600;color:rgba(245,240,232,.6);letter-spacing:1px;margin-bottom:16px;text-transform:uppercase;}
+.exp-ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.exp-ul li{font-size:14px;color:var(--muted);line-height:1.6;padding-left:16px;position:relative;}
+.exp-ul li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:10px;top:5px;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.exp-tag{
+  font-size:10px;font-weight:600;letter-spacing:.5px;padding:3px 9px;
+  background:rgba(0,51,102,.3);border:1px solid rgba(0,51,102,.5);color:var(--muted);
+}
+@media(max-width:680px){
+  .exp-grid{grid-template-columns:1fr;}
+  .exp-nav{flex-direction:row;flex-wrap:wrap;gap:8px;position:static;margin-bottom:20px;}
+  .exp-nb{border-left:none;border-bottom:2px solid var(--border);padding:8px 12px;}
+  .exp-nb.active{border-bottom-color:var(--red);background:rgba(204,0,0,.08);}
+  .exp-nb-yr{display:none;}
+}
 
-  /* ── HERO ── */
-  #hero{
-    min-height:100vh;
-    display:flex;align-items:center;justify-content:center;
-    text-align:center;
-    padding-top:100px;
-    max-width:100%;
-  }
-  .hero-inner{position:relative;}
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;}
+.skill-block{
+  background:rgba(255,255,255,.02);border:1px solid var(--border);
+  padding:clamp(16px,2.5vw,24px);transition:border-color .3s;
+}
+.skill-block:hover{border-color:var(--border-r);}
+.skill-cat{
+  font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--red);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.skill-items{display:flex;flex-wrap:wrap;gap:6px;}
+.sk{
+  font-size:11px;font-weight:600;padding:4px 10px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--muted);letter-spacing:.5px;transition:all .2s;
+}
+.sk:hover{background:rgba(204,0,0,.15);border-color:var(--border-r);color:var(--white);}
 
-  .hero-badge{
-    display:inline-block;
-    background:var(--red);
-    color:#fff;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:3px;
-    text-transform:uppercase;
-    padding:6px 18px;
-    border-radius:20px;
-    margin-bottom:20px;
-  }
+/* ── PROJECTS ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,2.5vw,24px);}
+.proj-card{
+  border:1px solid var(--border);background:rgba(255,255,255,.02);
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.proj-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--blue));
+  transform:scaleX(0);transition:transform .3s;
+}
+.proj-card:hover{border-color:var(--border-r);transform:translateY(-4px);}
+.proj-card:hover::after{transform:scaleX(1);}
+.proj-top{padding:clamp(18px,3vw,24px);border-bottom:1px solid var(--border);background:rgba(255,255,255,.015);}
+.proj-num{font-family:'Bangers',cursive;font-size:44px;color:var(--border);line-height:1;margin-bottom:10px;}
+.proj-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:5px;}
+.proj-org{font-size:11px;color:var(--red);font-weight:600;letter-spacing:.5px;}
+.proj-bot{padding:clamp(14px,2.5vw,20px) clamp(18px,3vw,24px);}
+.proj-desc{font-size:13.5px;color:var(--muted);line-height:1.7;margin-bottom:12px;}
+.proj-impact{
+  font-family:'Bangers',cursive;font-size:22px;
+  color:var(--red);letter-spacing:1px;margin-bottom:12px;
+}
+.proj-stack{display:flex;flex-wrap:wrap;gap:5px;}
+.proj-stack span{
+  font-size:10px;font-weight:600;padding:2px 8px;
+  background:rgba(0,51,102,.25);border:1px solid rgba(0,51,102,.4);color:var(--muted);
+}
 
-  .hero-name{
-    font-family:'Bangers',cursive;
-    font-size:clamp(64px,10vw,120px);
-    letter-spacing:4px;
-    line-height:1;
-    color:var(--white);
-    text-shadow:
-      3px 3px 0 var(--red),
-      6px 6px 0 var(--dark-red);
-    margin-bottom:10px;
-  }
+/* ── AWARDS ── */
+.awards-bg{position:relative;z-index:1;background:var(--bg3);}
+.awards-inner{max-width:1200px;margin:0 auto;padding:clamp(60px,8vw,100px) clamp(16px,5vw,60px) 0;}
+.awards-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  border-top:1px solid var(--border);
+  max-width:1200px;margin:0 auto;
+}
+.award-block{
+  padding:clamp(24px,3.5vw,40px) clamp(16px,2.5vw,28px);
+  border-right:1px solid var(--border);transition:background .3s;
+}
+.award-block:last-child{border-right:none;}
+.award-block:hover{background:rgba(204,0,0,.08);}
+.award-yr{font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;}
+.award-title{font-family:'Bangers',cursive;font-size:20px;letter-spacing:1px;color:var(--white);margin-bottom:6px;}
+.award-org{font-size:11px;font-weight:600;color:var(--red);margin-bottom:8px;letter-spacing:.5px;}
+.award-desc{font-size:12.5px;color:var(--muted);line-height:1.6;}
+@media(max-width:540px){
+  .award-block{border-right:none;border-bottom:1px solid var(--border);}
+  .award-block:last-child{border-bottom:none;}
+}
 
-  .hero-title{
-    font-family:'Bangers',cursive;
-    font-size:clamp(22px,4vw,36px);
-    letter-spacing:3px;
-    color:var(--red);
-    margin-bottom:24px;
-    text-shadow:0 0 30px rgba(220,0,0,0.4);
-  }
+/* ── EDUCATION ── */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.5vw,24px);}
+.edu-card{
+  padding:clamp(18px,3vw,28px);border:1px solid var(--border);
+  border-top:3px solid var(--red);transition:all .3s;
+}
+.edu-card:hover{background:rgba(204,0,0,.04);}
+.edu-degree{font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;}
+.edu-school{font-size:12px;font-weight:600;color:var(--red);letter-spacing:.5px;margin-bottom:14px;}
+.edu-meta{display:flex;gap:clamp(12px,2vw,20px);flex-wrap:wrap;}
+.edu-mi strong{font-family:'Bangers',cursive;font-size:24px;color:var(--white);display:block;line-height:1;}
+.edu-mi span{font-size:11px;color:var(--muted);}
+@media(max-width:540px){.edu-grid{grid-template-columns:1fr;}}
 
-  .hero-tagline{
-    font-size:16px;
-    color:rgba(245,240,232,0.7);
-    max-width:600px;
-    margin:0 auto 36px;
-    line-height:1.7;
-  }
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,60px);align-items:start;}
+.contact-p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:14px;}
+.contact-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border:1px solid var(--border-r);
+  background:rgba(204,0,0,.08);margin-bottom:20px;
+}
+.contact-dot{width:7px;height:7px;background:var(--red);border-radius:50%;}
+.contact-badge-txt{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--red);text-transform:uppercase;}
+.contact-rows{display:flex;flex-direction:column;}
+.contact-row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--border);
+  text-decoration:none;color:inherit;transition:all .2s;
+}
+.contact-row:first-child{border-top:1px solid var(--border);}
+.contact-row:hover .c-icon{background:var(--red);border-color:var(--red);}
+.contact-row:hover .c-lbl{color:var(--red);}
+.c-icon{
+  width:38px;height:38px;flex-shrink:0;
+  border:1px solid var(--border-r);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:var(--red);transition:all .2s;
+}
+.c-lbl{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:2px;transition:color .2s;}
+.c-val{font-size:13px;color:var(--white);}
+@media(max-width:640px){.contact-grid{grid-template-columns:1fr;}}
 
-  .hero-roles{
-    display:flex;flex-wrap:wrap;
-    gap:10px;justify-content:center;
-    margin-bottom:40px;
-  }
-  .role-pill{
-    padding:7px 16px;
-    border:1.5px solid var(--red);
-    border-radius:20px;
-    font-size:12px;
-    font-weight:500;
-    letter-spacing:1px;
-    color:var(--white);
-    background:rgba(204,0,0,0.1);
-    transition:all .2s;
-  }
-  .role-pill:hover{background:var(--red);transform:translateY(-2px);}
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  background:var(--bg);
+  border-top:1px solid var(--border-r);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding:24px clamp(16px,5vw,48px);
+  font-size:11px;color:var(--muted);letter-spacing:.5px;
+}
+.footer-logo{font-family:'Bangers',cursive;font-size:20px;color:var(--red);letter-spacing:3px;}
 
-  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
-  .btn-primary{
-    padding:13px 32px;
-    background:var(--red);
-    color:#fff;
-    border:none;
-    border-radius:4px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    transition:all .2s;
-    text-decoration:none;
-    clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
-  }
-  .btn-primary:hover{background:var(--dark-red);transform:translateY(-2px);}
-  .btn-secondary{
-    padding:13px 32px;
-    background:transparent;
-    color:var(--white);
-    border:1.5px solid rgba(245,240,232,0.4);
-    border-radius:4px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    transition:all .2s;
-    text-decoration:none;
-  }
-  .btn-secondary:hover{border-color:var(--red);color:var(--red);}
-
-  /* spider hanging in hero */
-  .spider-hero{
-    font-size:60px;
-    display:block;
-    margin:0 auto 20px;
-    animation:hang 3s ease-in-out infinite;
-    filter:drop-shadow(0 0 20px rgba(220,0,0,0.6));
-  }
-  @keyframes hang{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-12px) rotate(5deg);}}
-
-  /* web string above hero spider */
-  .web-string{
-    width:2px;height:60px;
-    background:linear-gradient(to bottom,transparent,rgba(200,169,110,0.6));
-    margin:0 auto;
-  }
-
-  /* ── SECTION TITLE ── */
-  .section-title{
-    font-family:'Bangers',cursive;
-    font-size:42px;
-    letter-spacing:3px;
-    color:var(--white);
-    margin-bottom:8px;
-    display:flex;align-items:center;gap:14px;
-  }
-  .section-title::before{
-    content:'';display:block;
-    width:40px;height:4px;
-    background:var(--red);
-    border-radius:2px;
-    flex-shrink:0;
-  }
-  .section-subtitle{
-    color:rgba(245,240,232,0.5);
-    font-size:14px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-bottom:48px;
-    padding-left:54px;
-  }
-
-  /* ── ABOUT ── */
-  .about-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;align-items:center;
-  }
-  .about-text p{
-    font-size:15px;
-    line-height:1.8;
-    color:rgba(245,240,232,0.8);
-    margin-bottom:16px;
-  }
-  .about-stats{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-  }
-  .stat-card{
-    background:rgba(204,0,0,0.08);
-    border:1px solid rgba(204,0,0,0.3);
-    border-radius:8px;
-    padding:20px;
-    text-align:center;
-    transition:all .3s;
-    position:relative;
-    overflow:hidden;
-  }
-  .stat-card::before{
-    content:'';
-    position:absolute;top:0;left:0;right:0;
-    height:3px;background:var(--red);
-  }
-  .stat-card:hover{transform:translateY(-4px);border-color:var(--red);background:rgba(204,0,0,0.15);}
-  .stat-num{
-    font-family:'Bangers',cursive;
-    font-size:40px;
-    color:var(--red);
-    line-height:1;
-    display:block;
-  }
-  .stat-label{font-size:12px;color:rgba(245,240,232,0.6);letter-spacing:1px;margin-top:4px;}
-
-  /* ── EXPERIENCE TIMELINE ── */
-  .timeline{position:relative;padding-left:32px;}
-  .timeline::before{
-    content:'';position:absolute;left:0;top:0;bottom:0;
-    width:2px;background:rgba(204,0,0,0.3);
-  }
-  .timeline-item{
-    position:relative;
-    margin-bottom:40px;
-    opacity:0;transform:translateX(-20px);
-    transition:all .6s;
-  }
-  .timeline-item.visible{opacity:1;transform:translateX(0);}
-  .timeline-dot{
-    position:absolute;left:-39px;top:4px;
-    width:16px;height:16px;
-    background:var(--red);
-    border-radius:50%;
-    border:3px solid #0a0a1a;
-    box-shadow:0 0 12px rgba(204,0,0,0.8);
-  }
-  .timeline-dot::after{
-    content:'';
-    position:absolute;top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:6px;height:6px;
-    background:#fff;
-    border-radius:50%;
-  }
-  .job-card{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-left:3px solid var(--red);
-    border-radius:8px;
-    padding:24px;
-    transition:all .3s;
-  }
-  .job-card:hover{background:rgba(204,0,0,0.06);border-color:rgba(204,0,0,0.4);}
-  .job-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
-  .job-company{font-family:'Bangers',cursive;font-size:22px;color:var(--red);letter-spacing:1px;}
-  .job-date{font-size:12px;color:rgba(245,240,232,0.4);letter-spacing:1px;}
-  .job-role{font-size:14px;font-weight:600;color:var(--white);margin-bottom:14px;}
-  .job-bullets{list-style:none;padding:0;}
-  .job-bullets li{
-    font-size:13.5px;
-    color:rgba(245,240,232,0.7);
-    padding:5px 0 5px 18px;
-    position:relative;
-    line-height:1.6;
-  }
-  .job-bullets li::before{
-    content:'▸';
-    position:absolute;left:0;
-    color:var(--red);font-size:11px;
-    top:7px;
-  }
-  .job-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
-  .tag{
-    font-size:11px;padding:3px 10px;
-    background:rgba(0,51,102,0.4);
-    border:1px solid rgba(0,51,102,0.6);
-    border-radius:3px;
-    color:rgba(245,240,232,0.7);
-    letter-spacing:.5px;
-  }
-
-  /* ── SKILLS ── */
-  .skills-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-  }
-  .skill-category{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    padding:22px;
-    transition:all .3s;
-  }
-  .skill-category:hover{border-color:rgba(204,0,0,0.4);background:rgba(204,0,0,0.05);}
-  .skill-cat-title{
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--red);
-    margin-bottom:14px;
-    display:flex;align-items:center;gap:8px;
-  }
-  .skill-cat-title::after{content:'';flex:1;height:1px;background:rgba(204,0,0,0.2);}
-  .skill-items{display:flex;flex-wrap:wrap;gap:8px;}
-  .skill-item{
-    padding:5px 12px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:4px;
-    font-size:12px;
-    color:rgba(245,240,232,0.8);
-    transition:all .2s;
-  }
-  .skill-item:hover{background:rgba(204,0,0,0.2);border-color:var(--red);color:#fff;transform:translateY(-2px);}
-
-  /* ── PROJECTS ── */
-  .projects-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:24px;
-  }
-  .project-card{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    padding:26px;
-    transition:all .3s;
-    position:relative;
-    overflow:hidden;
-  }
-  .project-card::after{
-    content:'';
-    position:absolute;bottom:0;left:0;right:0;
-    height:3px;
-    background:linear-gradient(90deg,var(--red),var(--blue));
-    transform:scaleX(0);
-    transition:transform .3s;
-  }
-  .project-card:hover{transform:translateY(-6px);border-color:rgba(204,0,0,0.4);background:rgba(204,0,0,0.06);}
-  .project-card:hover::after{transform:scaleX(1);}
-  .project-label{
-    font-size:10px;font-weight:600;letter-spacing:2px;
-    text-transform:uppercase;color:var(--red);margin-bottom:10px;
-  }
-  .project-title{font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px;}
-  .project-org{font-size:12px;color:rgba(245,240,232,0.4);margin-bottom:14px;}
-  .project-desc{font-size:13.5px;color:rgba(245,240,232,0.7);line-height:1.7;margin-bottom:16px;}
-  .project-impact{
-    display:inline-block;
-    background:rgba(204,0,0,0.15);
-    border:1px solid rgba(204,0,0,0.3);
-    border-radius:4px;
-    padding:6px 12px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--red);
-    margin-bottom:14px;
-  }
-  .project-stack{display:flex;flex-wrap:wrap;gap:6px;}
-  .stack-item{
-    font-size:11px;padding:3px 9px;
-    background:rgba(0,51,102,0.3);
-    border:1px solid rgba(0,51,102,0.5);
-    border-radius:3px;
-    color:rgba(245,240,232,0.6);
-  }
-
-  /* ── AWARDS ── */
-  .awards-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
-  }
-  .award-card{
-    background:rgba(255,215,0,0.04);
-    border:1px solid rgba(255,215,0,0.15);
-    border-radius:10px;
-    padding:24px;
-    text-align:center;
-    transition:all .3s;
-    position:relative;
-    overflow:hidden;
-  }
-  .award-card::before{
-    content:'';
-    position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg,var(--gold),var(--red));
-  }
-  .award-card:hover{transform:translateY(-5px);border-color:rgba(255,215,0,0.4);background:rgba(255,215,0,0.08);}
-  .award-icon{font-size:36px;margin-bottom:12px;display:block;}
-  .award-title{font-family:'Bangers',cursive;font-size:20px;letter-spacing:1px;color:var(--gold);margin-bottom:6px;}
-  .award-org{font-size:12px;font-weight:600;color:var(--red);margin-bottom:8px;letter-spacing:1px;}
-  .award-desc{font-size:12.5px;color:rgba(245,240,232,0.6);line-height:1.6;}
-
-  /* ── EDUCATION ── */
-  .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  .edu-card{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    padding:24px;
-    border-top:3px solid var(--red);
-    transition:all .3s;
-  }
-  .edu-card:hover{background:rgba(204,0,0,0.06);transform:translateY(-3px);}
-  .edu-degree{font-size:16px;font-weight:700;color:var(--white);margin-bottom:6px;}
-  .edu-school{font-size:13px;color:var(--red);font-weight:600;margin-bottom:8px;}
-  .edu-meta{font-size:12px;color:rgba(245,240,232,0.5);}
-
-  /* ── CONTACT ── */
-  .contact-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:16px;
-    text-align:center;
-  }
-  .contact-item{
-    padding:24px;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    transition:all .3s;
-    text-decoration:none;
-    color:inherit;
-    display:block;
-  }
-  .contact-item:hover{border-color:var(--red);background:rgba(204,0,0,0.08);transform:translateY(-3px);}
-  .contact-icon{font-size:28px;margin-bottom:10px;}
-  .contact-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.4);margin-bottom:6px;}
-  .contact-value{font-size:13px;font-weight:600;color:var(--white);}
-
-  /* ── FOOTER ── */
-  footer{
-    position:relative;z-index:1;
-    text-align:center;
-    padding:40px;
-    border-top:1px solid rgba(204,0,0,0.2);
-    color:rgba(245,240,232,0.3);
-    font-size:13px;
-  }
-  footer span{color:var(--red);}
-
-  /* ── SCROLL REVEAL ── */
-  .reveal{opacity:0;transform:translateY(30px);transition:all .7s ease;}
-  .reveal.visible{opacity:1;transform:translateY(0);}
-
-  /* ── WEB DIVIDER ── */
-  .web-divider{
-    width:100%;height:30px;
-    position:relative;z-index:1;
-    overflow:hidden;
-    opacity:0.3;
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar{width:6px;}
-  ::-webkit-scrollbar-track{background:#0a0a1a;}
-  ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px;}
-
-  @media(max-width:700px){
-    nav{padding:12px 20px;}
-    .nav-links{display:none;}
-    section{padding:60px 20px;}
-    .about-grid,.edu-grid{grid-template-columns:1fr;}
-  }
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
 </style>
+</head>
+<body>
 
-<canvas id="web-canvas"></canvas>
-<div id="spider-cursor">🕷</div>
+<canvas id="wc"></canvas>
 
-<nav>
+<!-- ── NAV ── -->
+<nav class="nav">
   <div class="nav-logo">PR</div>
   <div class="nav-links">
     <a href="#about">About</a>
@@ -547,455 +412,305 @@
     <a href="#awards">Awards</a>
     <a href="#contact">Contact</a>
   </div>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
-<div id="hero" style="position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 40px 60px;">
+<!-- ── MOBILE DRAWER ── -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#about" class="dl">About</a>
+  <a href="#experience" class="dl">Experience</a>
+  <a href="#skills" class="dl">Skills</a>
+  <a href="#projects" class="dl">Projects</a>
+  <a href="#awards" class="dl">Awards</a>
+  <a href="#contact" class="dl">Contact</a>
+  <a href="#contact" class="d-cta">Get In Touch</a>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
   <div class="hero-inner">
     <div class="web-string"></div>
-    <span class="spider-hero">🕷</span>
+    <span class="hero-spider">🕷</span>
     <div class="hero-badge">Available for Opportunities</div>
     <h1 class="hero-name">PRINCE RAJ</h1>
     <div class="hero-title">SaaS Technical Professional</div>
-    <p class="hero-tagline">3+ years bridging Customer Success, Technical Support, Solutions Consulting & Business Analysis across enterprise SaaS environments.</p>
-    <div class="hero-roles">
-      <span class="role-pill">Customer Success Engineer</span>
-      <span class="role-pill">Solutions Consultant</span>
-      <span class="role-pill">Technical Support Engineer</span>
-      <span class="role-pill">Technical Business Analyst</span>
+    <p class="hero-desc">3+ years bridging Customer Success, Technical Support, Solutions Consulting &amp; Business Analysis across enterprise SaaS environments.</p>
+    <div class="role-pills">
+      <span class="rpill">Customer Success Engineer</span>
+      <span class="rpill">Solutions Consultant</span>
+      <span class="rpill">Technical Support Engineer</span>
+      <span class="rpill">Technical Business Analyst</span>
     </div>
     <div class="hero-btns">
-      <a href="#contact" class="btn-primary">Get In Touch</a>
-      <a href="#experience" class="btn-secondary">View Experience</a>
+      <a href="#contact" class="btn-p">Get In Touch</a>
+      <a href="#experience" class="btn-s">View Experience</a>
     </div>
   </div>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-num">20+</div><div class="stat-lbl">Enterprise Accounts</div></div>
+  <div class="stat-item"><div class="stat-num">95%+</div><div class="stat-lbl">SLA &amp; CSAT</div></div>
+  <div class="stat-item"><div class="stat-num">600%</div><div class="stat-lbl">Time Saved</div></div>
+  <div class="stat-item"><div class="stat-num">4</div><div class="stat-lbl">Awards Won</div></div>
+</div>
+
+<div class="divider-line"></div>
+
+<!-- ── ABOUT ── -->
+<section id="about" class="section">
   <div class="reveal">
-    <div class="section-title">About Me</div>
-    <div class="section-subtitle">The hero behind the tech</div>
+    <div class="sec-label">About</div>
+    <div class="sec-title">THE HERO BEHIND THE TECH</div>
     <div class="about-grid">
-      <div class="about-text">
-        <p>I'm a versatile SaaS professional who thrives at the intersection of technology and customer success. With 3+ years across enterprise platforms like Gainsight and Adobe Campaign, I've learned that the best solutions come from deeply understanding both the technical landscape and the human behind the problem.</p>
-        <p>From managing 20+ enterprise accounts and maintaining 95%+ CSAT scores to building internal tools that saved my team 600%+ in processing time — I bring both the analytical mind of a business analyst and the hands-on skill of a technical engineer.</p>
-        <p>Based in Hyderabad, open to remote and hybrid roles across India.</p>
+      <div>
+        <p class="about-p">I am a versatile SaaS professional who thrives at the intersection of technology and customer success. With 3+ years across enterprise platforms like Gainsight and Adobe Campaign, I have learned that the best solutions come from deeply understanding both the technical landscape and the human behind the problem.</p>
+        <p class="about-p">From managing 20+ enterprise accounts and maintaining 95%+ CSAT scores to building internal tools that saved my team 600%+ in processing time — I bring both the analytical mindset of a business analyst and the hands-on skills of a technical engineer.</p>
+        <p class="about-p">Based in Hyderabad, India. Open to remote, hybrid, and relocation opportunities.</p>
       </div>
-      <div class="about-stats">
-        <div class="stat-card"><span class="stat-num">20+</span><div class="stat-label">Enterprise Accounts</div></div>
-        <div class="stat-card"><span class="stat-num">95%+</span><div class="stat-label">SLA & CSAT Score</div></div>
-        <div class="stat-card"><span class="stat-num">600%</span><div class="stat-label">Time Saved (Tool Built)</div></div>
-        <div class="stat-card"><span class="stat-num">4</span><div class="stat-label">Awards Won</div></div>
+      <div class="about-highlights">
+        <div class="ahl"><div class="ahl-num">3+</div><div class="ahl-text"><strong>Years Enterprise Experience</strong><span>Gainsight · GlobalLogic · Epsilon India</span></div></div>
+        <div class="ahl"><div class="ahl-num">4</div><div class="ahl-text"><strong>Target Roles</strong><span>CSE · Solutions Consultant · TSE · BA</span></div></div>
+        <div class="ahl"><div class="ahl-num">30%</div><div class="ahl-text"><strong>Error Reduction at GlobalLogic</strong><span>HTML/CSS/JS/SQL debugging</span></div></div>
+        <div class="ahl"><div class="ahl-num">MCA</div><div class="ahl-text"><strong>Master of Computer Applications</strong><span>Jain University · GPA 7.87</span></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="reveal">
-    <div class="section-title">Experience</div>
-    <div class="section-subtitle">The web of work</div>
-    <div class="timeline">
+<div class="divider-line"></div>
 
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="job-card">
-          <div class="job-header">
-            <div class="job-company">Gainsight</div>
-            <div class="job-date">April 2025 – Present</div>
-          </div>
-          <div class="job-role">Customer Success Solutions Consultant</div>
-          <ul class="job-bullets">
-            <li>Own a portfolio of 20+ enterprise accounts, conducting bi-weekly strategic calls to align product usage with business goals and drive measurable ROI.</li>
-            <li>Deliver technical enablement and training sessions on HTML, CSS, JavaScript, REST API, and SQL — improving adoption rates and reducing escalations.</li>
-            <li>Gather, analyse, and document customer requirements; collaborate cross-functionally with Product, Engineering, and Sales to influence roadmap.</li>
-            <li>Built internal data-retrieval tool using Gainsight's internal APIs — adopted as standard workflow across the CS team.</li>
-            <li>Co-built Instance Review Application — conducted process mapping and delivered automation saving team 600%+ in processing time.</li>
-            <li>Onboard and mentor new CS team members. Won Rookie of the Quarter (2025).</li>
+<!-- ── EXPERIENCE ── -->
+<div id="experience" class="exp-wrap">
+  <div class="exp-inner">
+    <div class="reveal">
+      <div class="sec-label">Experience</div>
+      <div class="sec-title">THE WEB OF WORK</div>
+    </div>
+    <div class="exp-grid">
+      <div class="exp-nav">
+        <button class="exp-nb active" data-i="0"><div class="exp-nb-co">Gainsight</div><div class="exp-nb-yr">2025–Now</div></button>
+        <button class="exp-nb" data-i="1"><div class="exp-nb-co">GlobalLogic</div><div class="exp-nb-yr">2024–25</div></button>
+        <button class="exp-nb" data-i="2"><div class="exp-nb-co">Epsilon India</div><div class="exp-nb-yr">2023–24</div></button>
+      </div>
+      <div class="exp-cards">
+        <div class="exp-card reveal" id="ec0">
+          <div class="exp-head"><div class="exp-co">Gainsight</div><div class="exp-badge">April 2025 – Present</div></div>
+          <div class="exp-role">Customer Success Solutions Consultant</div>
+          <ul class="exp-ul">
+            <li>Own 20+ enterprise accounts — bi-weekly strategic calls to align product usage, resolve technical blockers, and ensure measurable ROI.</li>
+            <li>Deliver enablement sessions on HTML, CSS, JavaScript, REST API, and SQL; document and relay customer requirements to influence Product roadmap.</li>
+            <li>Built internal data-retrieval tool using Gainsight APIs — adopted as standard CS team workflow tool.</li>
+            <li>Co-built Instance Review Application — process mapping and automation saving team 600%+ processing time per cycle.</li>
+            <li>Mentor new CS team members. Won Rookie of the Quarter (2025).</li>
           </ul>
-          <div class="job-tags">
-            <span class="tag">Gainsight</span><span class="tag">REST API</span><span class="tag">JavaScript</span><span class="tag">SQL</span><span class="tag">HTML/CSS</span><span class="tag">Customer Success</span>
-          </div>
+          <div class="exp-tags"><span class="exp-tag">Gainsight</span><span class="exp-tag">REST API</span><span class="exp-tag">JavaScript</span><span class="exp-tag">SQL</span><span class="exp-tag">HTML/CSS</span></div>
         </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="job-card">
-          <div class="job-header">
-            <div class="job-company">GlobalLogic</div>
-            <div class="job-date">May 2024 – April 2025</div>
-          </div>
-          <div class="job-role">Senior Product Support Engineer</div>
-          <ul class="job-bullets">
-            <li>Delivered Tier-2 support for Adobe Campaign Classic/Standard (PaaS) for enterprise clients across the Americas.</li>
-            <li>Debugged HTML/CSS email templates, JavaScript personalisation logic, and SQL segmentation queries — reduced errors by 30%.</li>
-            <li>Leveraged Splunk for root cause analysis — reducing MTTR by 15% and preventing recurring incidents.</li>
-            <li>Technical liaison between enterprise clients and Engineering — translated business requirements into technical specs.</li>
-            <li>Maintained 95%+ SLA compliance and 95%+ CSAT across all accounts. Top Performer & Dashing Debut Award winner.</li>
+        <div class="exp-card reveal" id="ec1">
+          <div class="exp-head"><div class="exp-co">GlobalLogic</div><div class="exp-badge">May 2024 – April 2025</div></div>
+          <div class="exp-role">Senior Product Support Engineer</div>
+          <ul class="exp-ul">
+            <li>Tier-2 support for Adobe Campaign Classic/Standard (PaaS) — primary contact for enterprise clients in the Americas.</li>
+            <li>Debugged HTML/CSS, JavaScript personalisation, and SQL segmentation — reduced client errors by 30%.</li>
+            <li>Splunk RCA reducing MTTR by 15%; technical liaison between clients and Engineering team.</li>
+            <li>Maintained 95%+ SLA and CSAT. Top Performer and Dashing Debut Award winner.</li>
           </ul>
-          <div class="job-tags">
-            <span class="tag">Adobe Campaign</span><span class="tag">Splunk</span><span class="tag">SQL</span><span class="tag">JavaScript</span><span class="tag">Jira</span><span class="tag">SFTP</span>
-          </div>
+          <div class="exp-tags"><span class="exp-tag">Adobe Campaign</span><span class="exp-tag">Splunk</span><span class="exp-tag">SQL</span><span class="exp-tag">JavaScript</span><span class="exp-tag">Jira</span></div>
         </div>
-      </div>
-
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="job-card">
-          <div class="job-header">
-            <div class="job-company">Epsilon India</div>
-            <div class="job-date">Feb 2023 – April 2024</div>
-          </div>
-          <div class="job-role">Campaign Analyst</div>
-          <ul class="job-bullets">
-            <li>Supported 5 concurrent enterprise accounts on Harmony (PCM) — campaigns, segmentation, A/B testing, and technical troubleshooting.</li>
-            <li>Used HTML, CSS, Free Marker scripting, and SQL for email template debugging and audience query optimisation — improved data accuracy by 30%.</li>
-            <li>Identified recurring manual workflow bottleneck; built Automate Hub — reduced ServiceNow resolution by 10-15% and manual effort by 15-20%.</li>
-            <li>Produced campaign performance reports and process documentation for enterprise clients. Best Newcomer Award winner.</li>
+        <div class="exp-card reveal" id="ec2">
+          <div class="exp-head"><div class="exp-co">Epsilon India</div><div class="exp-badge">Feb 2023 – April 2024</div></div>
+          <div class="exp-role">Campaign Analyst</div>
+          <ul class="exp-ul">
+            <li>Supported 5 enterprise accounts on Harmony PCM — campaigns, segmentation, A/B testing, troubleshooting.</li>
+            <li>HTML, CSS, Free Marker, SQL debugging — improved data accuracy by 30%.</li>
+            <li>Built Automate Hub — reduced ServiceNow resolution by 10–15% and manual effort 15–20%. Best Newcomer Award.</li>
           </ul>
-          <div class="job-tags">
-            <span class="tag">Harmony PCM</span><span class="tag">HTML/CSS</span><span class="tag">SQL</span><span class="tag">ServiceNow</span><span class="tag">Free Marker</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="reveal">
-    <div class="section-title">Skills</div>
-    <div class="section-subtitle">The spider's toolkit</div>
-    <div class="skills-grid">
-      <div class="skill-category">
-        <div class="skill-cat-title">Customer Success</div>
-        <div class="skill-items">
-          <span class="skill-item">Account Management</span>
-          <span class="skill-item">QBR / EBR</span>
-          <span class="skill-item">Churn Mitigation</span>
-          <span class="skill-item">Onboarding</span>
-          <span class="skill-item">Enablement</span>
-          <span class="skill-item">SLA / CSAT</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-title">Technical Support</div>
-        <div class="skill-items">
-          <span class="skill-item">Tier-2 Support</span>
-          <span class="skill-item">Root Cause Analysis</span>
-          <span class="skill-item">Incident Management</span>
-          <span class="skill-item">Splunk</span>
-          <span class="skill-item">Log Analysis</span>
-          <span class="skill-item">Debugging</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-title">Business Analysis</div>
-        <div class="skill-items">
-          <span class="skill-item">Requirements Gathering</span>
-          <span class="skill-item">Process Mapping</span>
-          <span class="skill-item">Gap Analysis</span>
-          <span class="skill-item">Documentation</span>
-          <span class="skill-item">Stakeholder Mgmt</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-title">Development & APIs</div>
-        <div class="skill-items">
-          <span class="skill-item">JavaScript</span>
-          <span class="skill-item">HTML</span>
-          <span class="skill-item">CSS</span>
-          <span class="skill-item">SQL</span>
-          <span class="skill-item">REST API</span>
-          <span class="skill-item">Python</span>
-          <span class="skill-item">PHP</span>
-          <span class="skill-item">Postman</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-title">Platforms</div>
-        <div class="skill-items">
-          <span class="skill-item">Gainsight</span>
-          <span class="skill-item">Adobe Campaign</span>
-          <span class="skill-item">Harmony PCM</span>
-          <span class="skill-item">Jira</span>
-          <span class="skill-item">ServiceNow</span>
-          <span class="skill-item">MS Dynamics</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <div class="skill-cat-title">Soft Skills</div>
-        <div class="skill-items">
-          <span class="skill-item">Client Engagement</span>
-          <span class="skill-item">Team Mentoring</span>
-          <span class="skill-item">Cross-functional</span>
-          <span class="skill-item">Problem Solving</span>
-          <span class="skill-item">Communication</span>
+          <div class="exp-tags"><span class="exp-tag">Harmony PCM</span><span class="exp-tag">HTML/CSS</span><span class="exp-tag">SQL</span><span class="exp-tag">ServiceNow</span></div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<div class="divider-line"></div>
+
+<!-- ── SKILLS ── -->
+<section id="skills" class="section">
+  <div class="reveal">
+    <div class="sec-label">Skills</div>
+    <div class="sec-title">THE SPIDER'S TOOLKIT</div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-block"><div class="skill-cat">Customer Success</div><div class="skill-items"><span class="sk">Account Mgmt</span><span class="sk">QBR/EBR</span><span class="sk">Churn Mitigation</span><span class="sk">Enablement</span><span class="sk">Onboarding</span><span class="sk">SLA/CSAT</span></div></div>
+    <div class="skill-block"><div class="skill-cat">Technical Support</div><div class="skill-items"><span class="sk">Tier-2 Support</span><span class="sk">Root Cause Analysis</span><span class="sk">Splunk</span><span class="sk">Incident Mgmt</span><span class="sk">Log Analysis</span></div></div>
+    <div class="skill-block"><div class="skill-cat">Business Analysis</div><div class="skill-items"><span class="sk">Requirements</span><span class="sk">Process Mapping</span><span class="sk">Gap Analysis</span><span class="sk">Documentation</span><span class="sk">Stakeholder Mgmt</span></div></div>
+    <div class="skill-block"><div class="skill-cat">Development &amp; APIs</div><div class="skill-items"><span class="sk">JavaScript</span><span class="sk">HTML</span><span class="sk">CSS</span><span class="sk">SQL</span><span class="sk">REST API</span><span class="sk">Python</span><span class="sk">Postman</span></div></div>
+    <div class="skill-block"><div class="skill-cat">Platforms</div><div class="skill-items"><span class="sk">Gainsight</span><span class="sk">Adobe Campaign</span><span class="sk">Harmony PCM</span><span class="sk">Jira</span><span class="sk">ServiceNow</span><span class="sk">MS Dynamics</span></div></div>
+    <div class="skill-block"><div class="skill-cat">Soft Skills</div><div class="skill-items"><span class="sk">Client Engagement</span><span class="sk">Mentoring</span><span class="sk">Cross-functional</span><span class="sk">Problem Solving</span><span class="sk">Communication</span></div></div>
+  </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects">
+<div class="divider-line"></div>
+
+<!-- ── PROJECTS ── -->
+<section id="projects" class="section">
   <div class="reveal">
-    <div class="section-title">Projects</div>
-    <div class="section-subtitle">Web-slinging solutions</div>
-    <div class="projects-grid">
-
-      <div class="project-card">
-        <div class="project-label">Internal Tool — Gainsight</div>
-        <div class="project-title">Instance Review Application</div>
-        <div class="project-org">Gainsight · 2025</div>
-        <div class="project-desc">Mapped team workflows, identified review cycle bottleneck, and co-built an end-to-end automation solution using internal Gainsight APIs. Now used as standard workflow tool across the CS team.</div>
-        <div class="project-impact">600%+ time saved per cycle</div>
-        <div class="project-stack">
-          <span class="stack-item">Gainsight APIs</span>
-          <span class="stack-item">JavaScript</span>
-          <span class="stack-item">REST API</span>
-          <span class="stack-item">Process Mapping</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-label">Internal Tool — Epsilon India</div>
-        <div class="project-title">Automate Hub</div>
-        <div class="project-org">Epsilon India · automatehub.netlify.app</div>
-        <div class="project-desc">Solo-built web application automating data sorting and email subject line personalisation. Identified the bottleneck independently through process analysis and delivered a full solution adopted by the support team.</div>
-        <div class="project-impact">10–15% faster ticket resolution</div>
-        <div class="project-stack">
-          <span class="stack-item">HTML</span>
-          <span class="stack-item">CSS</span>
-          <span class="stack-item">JavaScript</span>
-          <span class="stack-item">ServiceNow API</span>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-label">Full-Stack — Jain University</div>
-        <div class="project-title">Online Examination System</div>
-        <div class="project-org">Jain University · 2022–23</div>
-        <div class="project-desc">Gathered institutional requirements, designed system architecture, and deployed a full-stack MCQ exam platform with anti-cheating logic. Adopted institution-wide for official examinations.</div>
-        <div class="project-impact">30–40% admin time saved</div>
-        <div class="project-stack">
-          <span class="stack-item">HTML</span>
-          <span class="stack-item">CSS</span>
-          <span class="stack-item">JavaScript</span>
-          <span class="stack-item">PHP</span>
-          <span class="stack-item">MySQL</span>
-        </div>
-      </div>
-
+    <div class="sec-label">Projects</div>
+    <div class="sec-title">WEB-SLINGING SOLUTIONS</div>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card reveal">
+      <div class="proj-top"><div class="proj-num">01</div><div class="proj-title">Instance Review Application</div><div class="proj-org">Gainsight · Internal · 2025</div></div>
+      <div class="proj-bot"><div class="proj-desc">Mapped team workflows, identified review cycle bottleneck, and co-built end-to-end automation using internal Gainsight APIs. Now standard across the CS team.</div><div class="proj-impact">600%+ time saved</div><div class="proj-stack"><span>Gainsight APIs</span><span>JavaScript</span><span>REST API</span></div></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-top"><div class="proj-num">02</div><div class="proj-title">Automate Hub</div><div class="proj-org">Epsilon India · automatehub.netlify.app</div></div>
+      <div class="proj-bot"><div class="proj-desc">Solo-built data sorting and email personalisation web app. Independently identified the bottleneck and delivered a team-adopted solution.</div><div class="proj-impact">10–15% faster resolution</div><div class="proj-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>ServiceNow API</span></div></div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-top"><div class="proj-num">03</div><div class="proj-title">Online Examination System</div><div class="proj-org">Jain University · 2022–23</div></div>
+      <div class="proj-bot"><div class="proj-desc">Gathered requirements, designed architecture, and deployed full-stack MCQ platform with anti-cheating logic — adopted institution-wide.</div><div class="proj-impact">30–40% admin time saved</div><div class="proj-stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>PHP</span><span>MySQL</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- AWARDS -->
-<section id="awards">
-  <div class="reveal">
-    <div class="section-title">Awards</div>
-    <div class="section-subtitle">Victories in the field</div>
-    <div class="awards-grid">
-      <div class="award-card">
-        <span class="award-icon">🏆</span>
-        <div class="award-title">Rookie of the Quarter</div>
-        <div class="award-org">Gainsight · 2025</div>
-        <div class="award-desc">Exceptional cross-functional impact and account performance within the first quarter of joining.</div>
-      </div>
-      <div class="award-card">
-        <span class="award-icon">⭐</span>
-        <div class="award-title">Top Performer</div>
-        <div class="award-org">GlobalLogic</div>
-        <div class="award-desc">Ranked as best performer on the Adobe Campaign enterprise support team for outstanding technical delivery.</div>
-      </div>
-      <div class="award-card">
-        <span class="award-icon">🚀</span>
-        <div class="award-title">Dashing Debut Award</div>
-        <div class="award-org">GlobalLogic</div>
-        <div class="award-desc">Awarded for outstanding onboarding performance and immediate client impact as a new team member.</div>
-      </div>
-      <div class="award-card">
-        <span class="award-icon">🌟</span>
-        <div class="award-title">Best Newcomer Award</div>
-        <div class="award-org">Epsilon India</div>
-        <div class="award-desc">Honored for rapidly mastering 5 concurrent client accounts and significantly elevating team efficiency.</div>
-      </div>
+<!-- ── AWARDS ── -->
+<div id="awards" class="awards-bg">
+  <div class="awards-inner">
+    <div class="reveal">
+      <div class="sec-label">Recognition</div>
+      <div class="sec-title">VICTORIES IN THE FIELD</div>
     </div>
   </div>
-</section>
+  <div class="awards-grid reveal">
+    <div class="award-block"><div class="award-yr">2025</div><div class="award-title">Rookie of the Quarter</div><div class="award-org">Gainsight</div><div class="award-desc">Exceptional cross-functional impact and account performance within the first quarter.</div></div>
+    <div class="award-block"><div class="award-yr">2024</div><div class="award-title">Top Performer Award</div><div class="award-org">GlobalLogic</div><div class="award-desc">Best performer on Adobe Campaign enterprise support team for outstanding delivery.</div></div>
+    <div class="award-block"><div class="award-yr">2024</div><div class="award-title">Dashing Debut Award</div><div class="award-org">GlobalLogic</div><div class="award-desc">Outstanding onboarding performance and immediate client impact.</div></div>
+    <div class="award-block"><div class="award-yr">2023</div><div class="award-title">Best Newcomer Award</div><div class="award-org">Epsilon India</div><div class="award-desc">Rapidly mastered 5 concurrent accounts and elevated team efficiency.</div></div>
+  </div>
+</div>
 
-<!-- EDUCATION -->
-<section id="education">
+<!-- ── EDUCATION ── -->
+<section id="education" class="section">
   <div class="reveal">
-    <div class="section-title">Education</div>
-    <div class="section-subtitle">The origin story</div>
+    <div class="sec-label">Education</div>
+    <div class="sec-title">THE ORIGIN STORY</div>
     <div class="edu-grid">
-      <div class="edu-card">
-        <div class="edu-degree">Master of Computer Applications (MCA)</div>
-        <div class="edu-school">Jain University, Bengaluru</div>
-        <div class="edu-meta">2021 – 2023 &nbsp;·&nbsp; GPA: 7.87</div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
-        <div class="edu-school">St. Xavier's College, Ranchi</div>
-        <div class="edu-meta">2017 – 2020 &nbsp;·&nbsp; GPA: 7.22</div>
-      </div>
+      <div class="edu-card"><div class="edu-degree">Master of Computer Applications</div><div class="edu-school">Jain University, Bengaluru</div><div class="edu-meta"><div class="edu-mi"><strong>7.87</strong><span>GPA</span></div><div class="edu-mi"><strong>2021–23</strong><span>Duration</span></div></div></div>
+      <div class="edu-card"><div class="edu-degree">Bachelor of Computer Applications</div><div class="edu-school">St. Xavier's College, Ranchi</div><div class="edu-meta"><div class="edu-mi"><strong>7.22</strong><span>GPA</span></div><div class="edu-mi"><strong>2017–20</strong><span>Duration</span></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact">
+<div class="divider-line"></div>
+
+<!-- ── CONTACT ── -->
+<section id="contact" class="section">
   <div class="reveal">
-    <div class="section-title">Contact</div>
-    <div class="section-subtitle">Shoot your web</div>
+    <div class="sec-label">Contact</div>
+    <div class="sec-title">SHOOT YOUR WEB</div>
     <div class="contact-grid">
-      <a class="contact-item" href="mailto:prince1022raj@gmail.com">
-        <div class="contact-icon">✉</div>
-        <div class="contact-label">Email</div>
-        <div class="contact-value">prince1022raj@gmail.com</div>
-      </a>
-      <a class="contact-item" href="tel:+918298147719">
-        <div class="contact-icon">📞</div>
-        <div class="contact-label">Phone</div>
-        <div class="contact-value">+91 82981 47719</div>
-      </a>
-      <a class="contact-item" href="https://linkedin.com/in/prince-raj-22x" target="_blank">
-        <div class="contact-icon">💼</div>
-        <div class="contact-label">LinkedIn</div>
-        <div class="contact-value">prince-raj-22x</div>
-      </a>
-      <a class="contact-item" href="https://automatehub.netlify.app" target="_blank">
-        <div class="contact-icon">🌐</div>
-        <div class="contact-label">Project</div>
-        <div class="contact-value">automatehub.netlify.app</div>
-      </a>
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div class="contact-label">Location</div>
-        <div class="contact-value">Hyderabad, India</div>
+      <div>
+        <div class="contact-badge"><div class="contact-dot"></div><div class="contact-badge-txt">Open to opportunities</div></div>
+        <p class="contact-p">Actively exploring roles in Customer Success Engineering, Solutions Consulting, Technical Support, and Business Analysis. Whether you have a position, a project, or just want to connect — I would love to hear from you.</p>
+        <p class="contact-p">Based in Hyderabad, India. Open to remote, hybrid, and relocation opportunities.</p>
+      </div>
+      <div class="contact-rows">
+        <a class="contact-row" href="mailto:prince1022raj@gmail.com"><div class="c-icon">✉</div><div><div class="c-lbl">Email</div><div class="c-val">prince1022raj@gmail.com</div></div></a>
+        <a class="contact-row" href="tel:+918298147719"><div class="c-icon">☎</div><div><div class="c-lbl">Phone</div><div class="c-val">+91 82981 47719</div></div></a>
+        <a class="contact-row" href="https://linkedin.com/in/prince-raj-22x" target="_blank"><div class="c-icon">in</div><div><div class="c-lbl">LinkedIn</div><div class="c-val">linkedin.com/in/prince-raj-22x</div></div></a>
+        <a class="contact-row" href="https://automatehub.netlify.app" target="_blank"><div class="c-icon">⬡</div><div><div class="c-lbl">Project</div><div class="c-val">automatehub.netlify.app</div></div></a>
+        <div class="contact-row"><div class="c-icon">⌖</div><div><div class="c-lbl">Location</div><div class="c-val">Hyderabad, India</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>Crafted with passion by <span>Prince Raj</span> · Hyderabad, India</div>
-  <div style="margin-top:8px;font-size:12px;">Customer Success · Technical Support · Solutions Consulting · Business Analysis</div>
+  <div class="footer-logo">PR</div>
+  <div>Hyderabad, India · Open to remote &amp; hybrid</div>
+  <div>CS Engineer · Support · BA</div>
 </footer>
 
 <script>
-const canvas = document.getElementById('web-canvas');
-const ctx = canvas.getContext('2d');
-let W, H, nodes=[], mouse={x:0,y:0}, scrollY=0;
-
+// ── WEB CANVAS ──
+const canvas=document.getElementById('wc');
+const ctx=canvas.getContext('2d');
+let W,H,nodes=[];
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
 resize();
-window.addEventListener('resize',resize);
-
+window.addEventListener('resize',()=>{resize();createNodes();},{ passive:true });
 function createNodes(){
   nodes=[];
-  const count=Math.floor((W*H)/22000);
-  for(let i=0;i<count;i++){
-    nodes.push({
-      x:Math.random()*W, y:Math.random()*H,
-      vx:(Math.random()-.5)*0.3, vy:(Math.random()-.5)*0.3,
-      r:Math.random()*2+1
-    });
-  }
+  const n=Math.min(Math.floor((W*H)/20000),60);
+  for(let i=0;i<n;i++) nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3});
 }
 createNodes();
-
 function drawWeb(){
   ctx.clearRect(0,0,W,H);
-  const sy = window.scrollY;
-
   nodes.forEach(n=>{
-    n.x+=n.vx; n.y+=n.vy;
-    if(n.x<0||n.x>W) n.vx*=-1;
-    if(n.y<0||n.y>H) n.vy*=-1;
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0||n.x>W)n.vx*=-1;
+    if(n.y<0||n.y>H)n.vy*=-1;
   });
-
   for(let i=0;i<nodes.length;i++){
     for(let j=i+1;j<nodes.length;j++){
-      const dx=nodes[i].x-nodes[j].x;
-      const dy=nodes[i].y-nodes[j].y;
+      const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
       const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<160){
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x,nodes[i].y);
-        ctx.lineTo(nodes[j].x,nodes[j].y);
-        ctx.strokeStyle=`rgba(200,169,110,${(1-d/160)*0.7})`;
-        ctx.lineWidth=0.5;
-        ctx.stroke();
+      if(d<150){
+        ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.strokeStyle=`rgba(200,169,110,${(1-d/150)*.7})`;ctx.lineWidth=.5;ctx.stroke();
       }
     }
-    ctx.beginPath();
-    ctx.arc(nodes[i].x,nodes[i].y,nodes[i].r,0,Math.PI*2);
-    ctx.fillStyle='rgba(200,169,110,0.6)';
-    ctx.fill();
   }
-
   requestAnimationFrame(drawWeb);
 }
 drawWeb();
 
-// Spider cursor
-const spiderEl = document.getElementById('spider-cursor');
-document.addEventListener('mousemove',e=>{
-  spiderEl.style.left=e.clientX+'px';
-  spiderEl.style.top=e.clientY+'px';
-  mouse.x=e.clientX; mouse.y=e.clientY;
+// ── NAV ──
+const toggle=document.getElementById('navToggle');
+const drawer=document.getElementById('navDrawer');
+toggle.addEventListener('click',()=>{
+  const o=drawer.classList.toggle('open');
+  toggle.classList.toggle('open',o);
+  document.body.style.overflow=o?'hidden':'';
 });
-
-// Spider trail
-let trail=[];
-document.addEventListener('mousemove',e=>{
-  trail.push({x:e.clientX,y:e.clientY,t:Date.now()});
-  if(trail.length>30) trail.shift();
-});
-
-// Scroll reveal
-const revealEls = document.querySelectorAll('.reveal, .timeline-item');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('visible');
-    }
-  });
-},{threshold:0.12});
-revealEls.forEach(el=>observer.observe(el));
-
-// Stagger timeline items
-document.querySelectorAll('.timeline-item').forEach((el,i)=>{
-  el.style.transitionDelay=`${i*0.15}s`;
-});
-
-// Skill item hover sparkle
-document.querySelectorAll('.skill-item').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    el.style.transform='translateY(-3px) scale(1.05)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    el.style.transform='';
+document.querySelectorAll('.dl,.d-cta').forEach(a=>{
+  a.addEventListener('click',()=>{
+    drawer.classList.remove('open');toggle.classList.remove('open');
+    document.body.style.overflow='';
   });
 });
 
-// Nav active highlight on scroll
-const sections = document.querySelectorAll('section[id]');
+// ── REVEAL ──
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);ro.unobserve(e.target);}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── EXP NAV ──
+document.querySelectorAll('.exp-nb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.exp-nb').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const card=document.getElementById('ec'+btn.dataset.i);
+    if(card)card.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+});
+
+// ── ACTIVE NAV ──
+const secs=['about','experience','skills','projects','awards','contact'];
 window.addEventListener('scroll',()=>{
-  let current='';
-  sections.forEach(s=>{
-    if(window.scrollY>=s.offsetTop-120) current=s.id;
-  });
-  document.querySelectorAll('.nav-links a').forEach(a=>{
-    a.style.color = a.getAttribute('href')==='#'+current ? 'var(--red)' : '';
-  });
-});
+  let cur='';
+  secs.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=80)cur=id;});
+  document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
+},{ passive:true });
 </script>
+</body>
+</html>
